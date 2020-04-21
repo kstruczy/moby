@@ -424,7 +424,7 @@ func ReadSecurityXattrToTarHeader(path string, hdr *tar.Header) error {
 func getXattrByPrefix(path string, prefixes ...string) ([]string, error) {
 	var xattrs []string
 
-	size, err := unix.Listxattr(path, nil)
+	size, err := unix.Llistxattr(path, nil)
 	if err != nil {
 		if err == unix.ENOTSUP || err == unix.EOPNOTSUPP {
 			// filesystem does not support extended attributes
@@ -437,7 +437,7 @@ func getXattrByPrefix(path string, prefixes ...string) ([]string, error) {
 	}
 
 	buf := make([]byte, size)
-	read, err := unix.Listxattr(path, buf)
+	read, err := unix.Llistxattr(path, buf)
 	if err != nil {
 		return nil, err
 	}
